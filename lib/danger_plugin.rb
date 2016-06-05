@@ -1,7 +1,27 @@
 module Danger
   class DangerXcov < Plugin
 
-    def run(*args)
+    # Validates the code coverage of the files changed within a Pull Request.
+    # This method accepts the same arguments accepted by the xcov gem.
+    #
+    # @example Validating code coverage for EasyPeasy (easy-peasy.io)
+    #
+    #  xcov.report(
+    #    scheme: 'EasyPeasy',
+    #    workspace: 'Example/EasyPeasy.xcworkspace',
+    #    exclude_targets: 'Demo.app',
+    #    minimum_coverage_percentage: 90
+    #  )
+    #
+    #  # Checks the coverage for the EasyPeasy scheme within the specified
+    #  workspace, ignoring the target 'Demo.app' and setting a minimum
+    #  coverage percentage of 90%.
+    #  The result is sent to the pull request with a markdown format and
+    #  notifies failure if the minimum coverage threshold is not reached.
+    #
+    # @see: https://github.com/nakiostudio/danger-xcov
+    # @tags: xcode, coverage, xccoverage, tests, ios, xcov
+    def report(*args)
       # Check xcov availability, install it if needed
       system "gem install xcov" unless xcov_available
       unless xcov_available
@@ -31,10 +51,17 @@ module Danger
 
       # Send markdown
       markdown(report_markdown)
+
+      # Notify failure if minimum coverage hasn't been reached
+      if report.coverage < (minimum_coverage_percentage / 100)
+        fail("Code coverage under minimum of #{minimum_coverage_percentage}%")
+      end
     end
 
     # Class methods
 
+    # Brief description of the plugin
+    # @return  [String]
     def self.description
       "Danger plugin to validate the code coverage of the files changed"
     end
