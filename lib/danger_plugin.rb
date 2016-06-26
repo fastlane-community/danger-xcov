@@ -1,6 +1,6 @@
 module Danger
-  # Validates the code coverage of the files changed within a Pull Request.
-  # This method accepts the same arguments accepted by the xcov gem.
+  # Validates the code coverage of the files changed within a Pull Request and
+  # generates a brief coverage report.
   #
   # @example Validating code coverage for EasyPeasy (easy-peasy.io)
   #
@@ -17,16 +17,14 @@ module Danger
   #  The result is sent to the pull request with a markdown format and
   #  notifies failure if the minimum coverage threshold is not reached.
   #
-  # @see: https://github.com/nakiostudio/danger-xcov
-  # @tags: xcode, coverage, xccoverage, tests, ios, xcov
+  # @tags xcode, coverage, xccoverage, tests, ios, xcov
   class DangerXcov < Plugin
-
-    # Validates the code coverage of the files changed within a Pull Request and
-    # generates a brief coverage report.
+    # Validates the code coverage of the files changed within a Pull Request.
+    # This method accepts the same arguments allowed by the xcov gem.
     #
     # @param   Hash{Symbol => String} parameters
     #          This method accepts the same arguments accepted by the xcov gem.
-    #          A complete list of allowed parameters is available here:
+    #          A complete list of parameters allowed is available here:
     #          https://github.com/nakiostudio/xcov
     # @return  [void]
     def report(*args)
