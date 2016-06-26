@@ -1,29 +1,35 @@
 module Danger
+  # Validates the code coverage of the files changed within a Pull Request and
+  # generates a brief coverage report.
+  #
+  # @example Validating code coverage for EasyPeasy (easy-peasy.io)
+  #
+  #  xcov.report(
+  #    scheme: 'EasyPeasy',
+  #    workspace: 'Example/EasyPeasy.xcworkspace',
+  #    exclude_targets: 'Demo.app',
+  #    minimum_coverage_percentage: 90
+  #  )
+  #
+  #  # Checks the coverage for the EasyPeasy scheme within the specified
+  #  workspace, ignoring the target 'Demo.app' and setting a minimum
+  #  coverage percentage of 90%.
+  #  The result is sent to the pull request with a markdown format and
+  #  notifies failure if the minimum coverage threshold is not reached.
+  #
+  # @tags xcode, coverage, xccoverage, tests, ios, xcov
   class DangerXcov < Plugin
-
     # Validates the code coverage of the files changed within a Pull Request.
-    # This method accepts the same arguments accepted by the xcov gem.
+    # This method accepts the same arguments allowed by the xcov gem.
     #
-    # @example Validating code coverage for EasyPeasy (easy-peasy.io)
-    #
-    #  xcov.report(
-    #    scheme: 'EasyPeasy',
-    #    workspace: 'Example/EasyPeasy.xcworkspace',
-    #    exclude_targets: 'Demo.app',
-    #    minimum_coverage_percentage: 90
-    #  )
-    #
-    #  # Checks the coverage for the EasyPeasy scheme within the specified
-    #  workspace, ignoring the target 'Demo.app' and setting a minimum
-    #  coverage percentage of 90%.
-    #  The result is sent to the pull request with a markdown format and
-    #  notifies failure if the minimum coverage threshold is not reached.
-    #
-    # @see: https://github.com/nakiostudio/danger-xcov
-    # @tags: xcode, coverage, xccoverage, tests, ios, xcov
+    # @param   Hash{Symbol => String} parameters
+    #          This method accepts the same arguments accepted by the xcov gem.
+    #          A complete list of parameters allowed is available here:
+    #          https://github.com/nakiostudio/xcov
+    # @return  [void]
     def report(*args)
       # Check xcov availability, install it if needed
-      system "gem install xcov" unless xcov_available
+      `gem install xcov` unless xcov_available
       unless xcov_available
         puts "xcov is not available on this machine"
         return
