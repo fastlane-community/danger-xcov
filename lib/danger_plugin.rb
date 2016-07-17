@@ -4,33 +4,37 @@ module Danger
   #
   # @example Validating code coverage for EasyPeasy (easy-peasy.io)
   #
-  #  xcov.report(
-  #    scheme: 'EasyPeasy',
-  #    workspace: 'Example/EasyPeasy.xcworkspace',
-  #    exclude_targets: 'Demo.app',
-  #    minimum_coverage_percentage: 90
-  #  )
+  #    # Checks the coverage for the EasyPeasy scheme within the specified
+  #    # workspace, ignoring the target 'Demo.app' and setting a minimum
+  #    # coverage percentage of 90%.
+  #   
+  #    # The result is sent to the pull request with a markdown format and
+  #    # notifies failure if the minimum coverage threshold is not reached.
   #
-  #  # Checks the coverage for the EasyPeasy scheme within the specified
-  #  workspace, ignoring the target 'Demo.app' and setting a minimum
-  #  coverage percentage of 90%.
-  #  The result is sent to the pull request with a markdown format and
-  #  notifies failure if the minimum coverage threshold is not reached.
+  #    xcov.report(
+  #      scheme: 'EasyPeasy',
+  #      workspace: 'Example/EasyPeasy.xcworkspace',
+  #      exclude_targets: 'Demo.app',
+  #      minimum_coverage_percentage: 90
+  #    )
   #
   # @tags xcode, coverage, xccoverage, tests, ios, xcov
+  # @see nakiostudio/EasyPeasy
+  #
   class DangerXcov < Plugin
     # Validates the code coverage of the files changed within a Pull Request.
     # This method accepts the same arguments allowed by the xcov gem.
     #
-    # @param   Hash{Symbol => String} parameters
+    # @param   args Hash{Symbol => String} 
     #          This method accepts the same arguments accepted by the xcov gem.
     #          A complete list of parameters allowed is available here:
     #          https://github.com/nakiostudio/xcov
     # @return  [void]
+    #
     def report(*args)
       # Check xcov availability, install it if needed
-      `gem install xcov` unless xcov_available
-      unless xcov_available
+      `gem install xcov` unless xcov_available?
+      unless xcov_available?
         puts "xcov is not available on this machine"
         return
       end
@@ -65,18 +69,10 @@ module Danger
       end
     end
 
-    # Class methods
-
-    # Brief description of the plugin
-    # @return  [String]
-    def self.description
-      "Danger plugin to validate the code coverage of the files changed"
-    end
-
     # Aux methods
 
     # Checks whether xcov is available
-    def xcov_available
+    def xcov_available?
       `which xcov`.split("/").count > 1
     end
 
@@ -90,7 +86,7 @@ module Danger
       report
     end
 
-    private :xcov_available, :process_report
+    private :xcov_available?, :process_report
 
   end
 end
