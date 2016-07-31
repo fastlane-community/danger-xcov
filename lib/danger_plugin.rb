@@ -19,7 +19,7 @@ module Danger
   #    )
   #
   # @tags xcode, coverage, xccoverage, tests, ios, xcov
-  # @see nakiostudio/EasyPeasy
+  # @see nakiostudio/danger-xcov
   #
   class DangerXcov < Plugin
     # Validates the code coverage of the files changed within a Pull Request.
@@ -78,7 +78,7 @@ module Danger
 
     # Filters the files that haven't been modified in the current PR
     def process_report(report)
-      file_names = modified_files.map { |file| File.basename(file) }
+      file_names = git.modified_files.map { |file| File.basename(file) }
       report.targets.each do |target|
         target.files = target.files.select { |file| file_names.include?(file.name) }
       end
