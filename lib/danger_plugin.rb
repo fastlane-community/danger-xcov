@@ -47,11 +47,10 @@ module Danger
       Xcov.ignore_handler = Xcov::IgnoreHandler.new
 
       # Init project
-      FastlaneCore::Project.detect_projects(config)
-      Xcov.project = FastlaneCore::Project.new(config)
+      manager =  Xcov::Manager.new(config)
 
       # Parse .xccoverage
-      report_json = Xcov::Runner.new.parse_xccoverage
+      report_json = manager.parse_xccoverage
 
       # Map and process report
       report = process_report(Xcov::Report.map(report_json))
