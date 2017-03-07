@@ -25,7 +25,7 @@ module Danger
     # Validates the code coverage of the files changed within a Pull Request.
     # This method accepts the same arguments allowed by the xcov gem.
     #
-    # @param   args Hash{Symbol => String} 
+    # @param   args Hash{Symbol => String}
     #          This method accepts the same arguments accepted by the xcov gem.
     #          A complete list of parameters allowed is available here:
     #          https://github.com/nakiostudio/xcov
