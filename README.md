@@ -1,4 +1,6 @@
-![logo](http://www.nakiostudio.com/xcov-logo.png)
+<h3 align="center">
+<img src="/assets_readme/logo.png" alt="xcov Logo" />
+</h3>
 -------
 [![Twitter: @carlostify](https://img.shields.io/badge/contact-@carlostify-blue.svg?style=flat)](https://twitter.com/carlostify)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/nakiostudio/xcov/blob/master/LICENSE)
@@ -32,7 +34,9 @@ xcov.report(
 
 The result is as cool as follows:
 
-![screenshot](http://www.nakiostudio.com/danger-xcov.png)
+<h3 align="center">
+<img src="/assets_readme/xcov_danger.png" />
+</h3>
 
 ## License
 This project is licensed under the terms of the MIT license. See the LICENSE file.
