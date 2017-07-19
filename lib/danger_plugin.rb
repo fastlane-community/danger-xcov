@@ -40,9 +40,10 @@ module Danger
       end
 
       require "xcov"
+      require "fastlane_core"
 
       # Init Xcov
-      config = args.first
+      config = FastlaneCore::Configuration.create(Xcov::Options.available_options, convert_options(args.first))
       Xcov.config = config
       Xcov.ignore_handler = Xcov::IgnoreHandler.new
 
@@ -78,11 +79,19 @@ module Danger
     # Filters the files that haven't been modified in the current PR
     def process_report(report)
       file_names = @dangerfile.git.modified_files.map { |file| File.basename(file) }
+      file_names += @dangerfile.git.added_files.map { |file| File.basename(file) }
       report.targets.each do |target|
         target.files = target.files.select { |file| file_names.include?(file.name) }
       end
 
       report
+    end
+
+    # Processes the parameters passed to the plugin
+    def convert_options(options)
+      converted_options = options.__hash__.dup
+      converted_options.delete(:verbose)
+      converted_options
     end
 
     private :xcov_available?, :process_report
