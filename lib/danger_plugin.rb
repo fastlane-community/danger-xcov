@@ -89,7 +89,7 @@ module Danger
 
     # Processes the parameters passed to the plugin
     def convert_options(options)
-      converted_options = options.__hash__.dup
+      converted_options = options.dup
       converted_options.delete(:verbose)
       converted_options
     end
