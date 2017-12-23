@@ -32,6 +32,16 @@ module Danger
     # @return  [void]
     #
     def report(*args)
+      # Run xcov to produce a processed report
+      report = produce_report(*args)
+      # Output the processed report
+      output_report(report)
+    end
+  
+    # Produces and processes a report for use in the report method
+    # It takes the same arguments as report, and returns the same
+    # object as process_report
+    def produce_report(*args)
       # Check xcov availability, install it if needed
       `gem install xcov` unless xcov_available?
       unless xcov_available?
@@ -54,8 +64,11 @@ module Danger
       report_json = manager.parse_xccoverage
 
       # Map and process report
-      report = process_report(Xcov::Report.map(report_json))
+      process_report(Xcov::Report.map(report_json))
+    end
 
+    # Outputs a processed report with Danger
+    def output_report(report)
       # Create markdown
       report_markdown = report.markdown_value
 
