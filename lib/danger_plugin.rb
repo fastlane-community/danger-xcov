@@ -76,7 +76,7 @@ module Danger
       markdown(report_markdown)
 
       # Notify failure if minimum coverage hasn't been reached
-      threshold = config[:minimum_coverage_percentage].to_i
+      threshold = Xcov.config[:minimum_coverage_percentage].to_i
       if !threshold.nil? && (report.coverage * 100) < threshold
         fail("Code coverage under minimum of #{threshold}%")
       end
