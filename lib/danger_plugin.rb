@@ -58,10 +58,16 @@ module Danger
       Xcov.ignore_handler = Xcov::IgnoreHandler.new
 
       # Init project
-      manager =  Xcov::Manager.new(config)
+      report_json = nil
+      manager = Xcov::Manager.new(config)
 
-      # Parse .xccoverage
-      report_json = manager.parse_xccoverage
+      if Xcov.config[:html_report] || Xcov.config[:markdown_report] || Xcov.config[:json_report]
+        # Parse .xccoverage and create local report
+        report_json = manager.run
+      else
+        # Parse .xccoverage
+        report_json = manager.parse_xccoverage
+      end
 
       # Map and process report
       process_report(Xcov::Report.map(report_json))
