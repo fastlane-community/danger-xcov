@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['nakioparkour@gmail.com']
   spec.description   = %q{Danger plugin to validate the code coverage of the files changed.}
   spec.summary       = %q{Danger plugin to validate the code coverage of the files changed}
-  spec.homepage      = 'https://github.com/nakiostudio/danger-xcov'
+  spec.homepage      = 'https://github.com/fastlane-community/danger-xcov'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
