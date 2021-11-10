@@ -32,12 +32,16 @@ module Danger
     # @return  [void]
     #
     def report(*args)
-      # Run xcov to produce a processed report
-      report = produce_report(*args)
-      # Output the processed report
-      output_report(report)
+      begin
+        # Run xcov to produce a processed report
+        report = produce_report(*args)
+        # Output the processed report
+        output_report(report)
+      rescue => e
+        markdown("Xcov not run due to error: #{e}")
+      end
     end
-  
+
     # Produces and processes a report for use in the report method
     # It takes the same arguments as report, and returns the same
     # object as process_report
